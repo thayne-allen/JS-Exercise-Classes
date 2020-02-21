@@ -41,12 +41,11 @@ class Airplane {
 */
 
 class Person {
-    constructor(attributes) {
-      this.name = attributes.name;
-      this.age = attributes.age;
+    constructor(name, age) {
+      this.name = name;
+      this.age = age;
       this.stomach = [];
   }
-  //methods go here
   eat(someFood) {
     if (this.stomach.length < 10)
     this.stomach.push(someFood);
@@ -75,21 +74,22 @@ class Person {
 */
 
 class Car {
-  constructor(attributes) {
-    this.model = attributes.model;
-    this.milesPerGallon = attributes.milesPerGallon;
+  constructor(model, milesPerGallon) {
+    this.model = model;
+    this.milesPerGallon = milesPerGallon;
     this.tank = 0;
     this.odometer = 0;
-  }//methods go here
+  }
   fill(gallons) {
     this.tank = this.tank + gallons;
   }
   drive(distance) {
-    if (this.tank - this.milesPerGallon < distance) {
-      this.odometer = distance;
-      this.tank = this.tank - distance / this.milesPerGallon;
+    const drivableMiles = this.tank * this.milesPerGallon;
+    if (distance <= drivableMiles) {
+      this.odometer = this.odometer + distance
+      this.tank = this.tank - (distance / this.milesPerGallon);
     } else {
-      this.odometer = this.milesPerGallon - this.tank;
+      this.odometer = this.odometer + drivableMiles;
       this.tank = 0;
       return `I ran out of fuel at ${this.odometer} miles!`;
     }
@@ -114,7 +114,6 @@ class Lambdasian {
     this.age = attributes.age;
     this.location = attributes.location;
   }
-  //methods
   speak() {
     return `Hello my name is ${this.name}, I am from ${this.location}`;
   }
@@ -140,7 +139,7 @@ class Instructor extends Lambdasian {
     this.specialty = attributes.specialty;
     this.favLanguage = attributes.favLanguage;
     this.catchPhrase = attributes.catchPhrase;
-  }//methods go here
+  }
   demo(subject) {
     return `Today we are learning about ${subject}`
   }
@@ -170,16 +169,15 @@ class Student extends Lambdasian {
     this.previousBackground = attributes.previousBackground;
     this.className = attributes.className;
     this.favSubjects = attributes.favSubjects;
-
-  }//methods go here
+  }
   listSubjects() {
     return `Loving ${this.favSubjects}`
   }
-  PRAssignment(student,subject) {
-    return `${student.name} has submitted a PR for ${subject}`
+  PRAssignment(subject) {
+    return `${this.name} has submitted a PR for ${subject}`
   }
-  sprintChallenge(student, subject) {
-    return `${student.name} has begun sprint challenge on ${subject}`
+  sprintChallenge(subject) {
+    return `${this.name} has begun sprint challenge on ${subject}`
   }
 
 }
@@ -202,7 +200,7 @@ class ProjectManager extends Instructor{
     super(attributes);
     this.gradClassName = attributes.gradClassName;
     this.favInstructor = attributes.favInstructor;
-  }//methods
+  }
   standUp(channel) {
     return `${this.name} announces to ${channel}, @channel standy times!`
   }
